@@ -4,4 +4,9 @@
     <h1>Jimbo's Test Application</h1>
     <p>1. Get bootstrap working</p>
     <p>2. Create form</p>
+    {% for book in dataSet %}
+        {{ book.getId }}
+        {{ book.getTitle }}
+        {{ book.getAuthor }}
+    {% endfor %}
 {% endblock %}
