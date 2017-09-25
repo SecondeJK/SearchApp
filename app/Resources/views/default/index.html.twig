@@ -1,12 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Jimbo's Test Application</h1>
+    <h1>Search Application Demonstration</h1>
     <p>1. Get bootstrap working</p>
     <p>2. Create form</p>
-    {% for book in dataSet %}
-        {{ book.getId }}
-        {{ book.getTitle }}
-        {{ book.getAuthor }}
-    {% endfor %}
+    <table>
+        <thead>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Year</th>
+            <th>Genre</th>
+        </thead>
+        <tbody>
+        {% for book in dataSet %}
+            <tr>
+                <td>{{ book.getTitle }}</td>
+                <td>{{ book.getAuthor }}</td>
+                <td>{{ book.getYear }}</td>
+                <td>{{ book.getNumeric }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
