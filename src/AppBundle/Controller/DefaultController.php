@@ -28,6 +28,7 @@ class DefaultController extends Controller
 
         if ($searchForm->isSubmitted()) {
             $searchFormData = $searchForm->getData();
+            dump($searchFormData);
         }
 
         $repository = $this->getDoctrine()->getRepository(Book::class);

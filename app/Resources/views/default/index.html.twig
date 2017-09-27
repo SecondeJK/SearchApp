@@ -2,9 +2,7 @@
 
 {% block body %}
     <h1>Search Application Demonstration</h1>
-    {{ form_start(searchForm) }}
-    {{ form_widget(searchForm) }}
-    {{ form_end(searchForm) }}
+    {{ form(searchForm, {'attr': {'novalidate': 'novalidate'}}) }}
     <table>
         <thead>
             <th>Title</th>
