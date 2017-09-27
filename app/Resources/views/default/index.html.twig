@@ -2,8 +2,9 @@
 
 {% block body %}
     <h1>Search Application Demonstration</h1>
-    <p>1. Get bootstrap working</p>
-    <p>2. Create form</p>
+    {{ form_start(searchForm) }}
+    {{ form_widget(searchForm) }}
+    {{ form_end(searchForm) }}
     <table>
         <thead>
             <th>Title</th>
