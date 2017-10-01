@@ -25,18 +25,32 @@ class DefaultController extends Controller
             ->getForm();
 
         $searchForm->handleRequest($request);
+        $repository = $this->getDoctrine()->getRepository(Book::class);
 
         if ($searchForm->isSubmitted()) {
             $searchFormData = $searchForm->getData();
-            dump($searchFormData);
+
+            $query = $repository->createQueryBuilder('book')
+                ->where('book.title LIKE :title')
+                ->orWhere('book.author LIKE :author')
+                ->orWhere('book.year = :year')
+                ->orWhere('book.numeric = :numeric')
+                ->setParameter('title', '%' . $searchFormData['title'] . '%')
+                ->setParameter('author', '%' . $searchFormData['author'] . '%')
+                ->setParameter('year', $searchFormData['year'])
+                ->setParameter('numeric', '%' . $searchFormData['numeric'] . '%')
+                ->orderBy('book.title', 'ASC')
+                ->getQuery();
+
+            $dataSet = $query->getResult();
+        } else {
+            $dataSet = $repository->findAll();
         }
 
-        $repository = $this->getDoctrine()->getRepository(Book::class);
-        $searchResult = $repository->findAll();
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
-            'dataSet' => $searchResult,
+            'dataSet' => $dataSet,
             'searchForm' => $searchForm->createView()
         ]);
     }
