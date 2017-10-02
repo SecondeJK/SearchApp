@@ -29,18 +29,26 @@ class DefaultController extends Controller
 
         if ($searchForm->isSubmitted()) {
             $searchFormData = $searchForm->getData();
+            dump($searchFormData);
+            $query = $repository->createQueryBuilder('book');
+            
+            if ($searchFormData['title'] != null) {
+                $query->andWhere('book.title LIKE :title')->setParameter('title', '%' . $searchFormData['title'] . '%');
+            }
+            
+            if ($searchFormData['author'] != null) {
+                $query->andWhere('book.author LIKE :author')->setParameter('author', '%' . $searchFormData['author'] . '%');
+            }
 
-            $query = $repository->createQueryBuilder('book')
-                ->where('book.title LIKE :title')
-                ->orWhere('book.author LIKE :author')
-                ->orWhere('book.year = :year')
-                ->orWhere('book.numeric = :numeric')
-                ->setParameter('title', '%' . $searchFormData['title'] . '%')
-                ->setParameter('author', '%' . $searchFormData['author'] . '%')
-                ->setParameter('year', $searchFormData['year'])
-                ->setParameter('numeric', '%' . $searchFormData['numeric'] . '%')
-                ->orderBy('book.title', 'ASC')
-                ->getQuery();
+            if ($searchFormData['year'] != null) {
+                $query->andWhere('book.year = :year')->setParameter('year', $searchFormData['year']);
+            }
+
+            if ($searchFormData['numeric'] != null) {
+                $query->andWhere('book.numeric = :numeric')->setParameter('numeric', '%' . $searchFormData['numeric'] . '%');
+            }
+
+            $query = $query->orderBy('book.title', 'ASC')->getQuery();
 
             $dataSet = $query->getResult();
         } else {
