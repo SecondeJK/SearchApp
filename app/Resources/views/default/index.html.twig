@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Search Application Demo Stack:</h1>
-    <h2>Symfony, Vanilla JS, Sqlite</h2>
+    <div class="jumbotron">
+        <h1>Search Application Demo Stack:</h1>
+        <h2>Symfony, Vanilla JS, Sqlite</h2>
+        <h6>Concepts in code: unit testing, form search, ES6 event firing</h6>
+    </div>
     {{ form(searchForm, {'attr': {'novalidate': 'novalidate'}}) }}
-    <table>
-        <thead>
+    <table class="table">
+        <thead class="table-inverse">
             <th>Title</th>
             <th>Author</th>
             <th>Year</th>
