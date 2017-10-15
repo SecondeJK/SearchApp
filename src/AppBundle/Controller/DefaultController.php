@@ -9,6 +9,7 @@ use AppBundle\Entity\Book;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class DefaultController extends Controller
@@ -30,12 +31,14 @@ class DefaultController extends Controller
             )
             ->add('numeric', TextType::class, ['label' => 'Genre'])
             ->add('search', SubmitType::class)
+            ->add('reset', ResetType::class)
             ->getForm();
 
         $searchForm->handleRequest($request);
 
         if ($searchForm->isSubmitted()) {
             $searchFormData = $searchForm->getData();
+            dump($searchFormData);
             $query = $repository->createQueryBuilder('book');
             
             if ($searchFormData['title'] != null) {
@@ -46,7 +49,7 @@ class DefaultController extends Controller
                 $query->andWhere('book.author LIKE :author')->setParameter('author', '%' . $searchFormData['author'] . '%');
             }
 
-            if ($searchFormData['year'] != null) {
+            if ($searchFormData['year'] != (null || 'All')) {
                 $query->andWhere('book.year = :year')->setParameter('year', $searchFormData['year']);
             }
 
@@ -70,14 +73,18 @@ class DefaultController extends Controller
 
     protected function getBookYears($repository):array
     {
-        $allRecords = $repository->createQueryBuilder('book')
+        $allRecordsQuery = $repository->createQueryBuilder('book')
             ->groupBy('book.year')
-            ->orderBy('book.year', 'ASC');
+            ->orderBy('book.year', 'ASC')
+            ->getQuery();
+        
+        $allRecordsResult = $allRecordsQuery->getResult();
 
         $returnYears = [];
+        $returnYears['All'] = 'All';
 
-        foreach($allRecords as $entity){
-            $returnYears[] = $entity->getYear();
+        foreach($allRecordsResult as $entity){
+            $returnYears[$entity->getYear()] = $entity->getYear();
         }
 
         return $returnYears;
