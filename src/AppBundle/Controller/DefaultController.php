@@ -9,7 +9,6 @@ use AppBundle\Entity\Book;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class DefaultController extends Controller
@@ -31,14 +30,18 @@ class DefaultController extends Controller
             )
             ->add('numeric', TextType::class, ['label' => 'Genre'])
             ->add('search', SubmitType::class)
-            ->add('reset', ResetType::class)
+            ->add('reset', SubmitType::class, ['label' => 'Reset'])
             ->getForm();
 
         $searchForm->handleRequest($request);
 
         if ($searchForm->isSubmitted()) {
             $searchFormData = $searchForm->getData();
-            dump($searchFormData);
+            
+            if ($searchForm->get('reset')->isClicked()) {
+                $this->redirectToRoute('homepage');
+            }
+
             $query = $repository->createQueryBuilder('book');
             
             if ($searchFormData['title'] != null) {
