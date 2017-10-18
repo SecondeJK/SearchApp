@@ -1,5 +1,12 @@
 {
   "dependencies": {
     "tablesorter": "^2.29.0"
-  }
+  },
+  "name": "SearchApp",
+  "version": "1.0.0",
+  "description": "Demo app",
+  "main": "index.js",
+  "repository": "https://github.com/SecondeJK/SearchApp.git",
+  "author": "Jim Seconde",
+  "license": "MIT"
 }
