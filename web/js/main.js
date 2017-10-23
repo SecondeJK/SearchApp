@@ -1,0 +1,1 @@
+const Helper = require('tablesorter');
