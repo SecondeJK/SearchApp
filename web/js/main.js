@@ -1,5 +1,5 @@
 require('tablesorter')
 
-var jQuery = require('jquery')
+var $ = require('jquery')
 
-jQuery('#results_table').tablesorter()
+$('#results_table').tablesorter()
