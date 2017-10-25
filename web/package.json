@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "webpack"
+  },
+  "dependencies": {
+    "tablesorter": "^2.29.0"
+  },
+  "devDependencies": {
+    "webpack": "^3.8.1"
+  }
+}
