@@ -67,7 +67,6 @@ class DefaultController extends Controller
             $dataSet = $repository->findAll();
         }
 
-        // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'dataSet' => $dataSet,
             'searchForm' => $searchForm->createView()

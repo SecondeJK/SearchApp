@@ -6,7 +6,24 @@
         <h2>Symfony, Vanilla JS, Sqlite</h2>
         <h6>Concepts in code: unit testing, form search, JS event listener, SASS compiling, BEM usage, custom pagination, CSV export</h6>
     </div>
-    {{ form(searchForm, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    {{ form_start(searchForm, {'attr': {'novalidate': 'novalidate'}}) }}
+    {# {% form_theme searchForm 'form/searchform.html.twig' %} #}
+    <div class="form-row">
+        {{ form_row(searchForm.title) }}
+        {{ form_row(searchForm.author) }}
+        {{ form_row(searchForm.year) }}
+        {{ form_row(searchForm.numeric) }}
+    </div>
+    <div class="form-row">
+        {{ form_row(searchForm.search, {'attr': {'class': 'btn btn-primary'}}) }}
+        {{ form_row(searchForm.reset, {'attr': {'class': 'btn btn-primary'}}) }}
+    </div>
+    {{ form_end(searchForm) }}
+
+    <div>
+    </div>
+
     <table id="results_table" class="tablesorter">
         <thead class="table-inverse">
             <th>Title</th>
